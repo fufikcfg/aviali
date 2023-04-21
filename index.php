@@ -22,7 +22,6 @@ switch($_GET['mode'])
         break;
     case "profile":
         echo $twig->render('profile.twig', array('user' => $_SESSION['user']));
-        var_dump($_SESSION['user']);
         break;
     case "logout":
         unset($_SESSION['user']);

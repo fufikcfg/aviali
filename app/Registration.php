@@ -11,7 +11,6 @@ class Registration
     private $email;
     private $phoneNumber;
     private $password;
-    private $connect;
 
     private $errorMessage;
 
@@ -25,8 +24,23 @@ class Registration
         $this->password = $password;
     }
 
+    private function getUpperName()
+    {
+        return str_replace($this->name[0], strtoupper($this->name[0]), $this->name);
+    }
+
+    private function getUpperSurname()
+    {
+        return str_replace($this->surname[0], strtoupper($this->surname[0]), $this->surname);
+    }
+
+    private function getUpperMiddleName()
+    {
+        return str_replace($this->middleName[0], strtoupper($this->middleName[0]), $this->middleName);
+    }
+
     private function addUserToDataBase() : void {
-        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->name[0] = mb_strtoupper($this->name[0]), $this->surname[0] = mb_strtoupper($this->surname[0]), $this->middleName[0] = mb_strtoupper($this->middleName[0]), $this->email, $this->phoneNumber, md5($this->password)));
+        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->getUpperName(), $this->getUpperSurname(), $this->getUpperMiddleName(), $this->email, $this->phoneNumber, md5($this->password)));
     }
 
     private function createSessionForAuthUser() : void {
@@ -41,12 +55,6 @@ class Registration
         if(empty($_SESSION['user'])) {
             $_SESSION['user'] = 'Non auth';
         }
-    }
-
-    public static function getUserName() : array {
-
-        session_start();
-        return array($_SESSION['user']);
     }
 
     private function checkingTheFillingBox() : bool {

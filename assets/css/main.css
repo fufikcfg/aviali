@@ -7,3 +7,8 @@
     color: #a52834;
     text-decoration-line: none;
 }
+
+.error-message {
+    margin: 0.5rem;
+    color: #a52834;
+}
