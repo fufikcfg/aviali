@@ -1,5 +1,3 @@
-<?php
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,17 +11,21 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">User: <?php ?></a>
+    <a class="navbar-brand" href="?mode=profile">User: {{ user }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="?mode=register">Registration</a>
+                {% if user == "Non auth" %}
+                    <a class="nav-link" href="?mode=register">Registration</a>
+                {% endif %}
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                {% if user == "Non auth" %}
+                    <a class="nav-link" href="#">Authorization</a>
+                {% endif %}
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Pricing</a>
@@ -34,5 +36,4 @@
     </span>
     </div>
 </nav>
-</body>
-</html>
+

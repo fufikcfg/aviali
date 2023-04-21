@@ -26,7 +26,27 @@ class Registration
     }
 
     private function addUserToDataBase() : void {
-        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->name, $this->surname, $this->middleName, $this->email, $this->phoneNumber, md5($this->password)));
+        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->name[0] = mb_strtoupper($this->name[0]), $this->surname[0] = mb_strtoupper($this->surname[0]), $this->middleName[0] = mb_strtoupper($this->middleName[0]), $this->email, $this->phoneNumber, md5($this->password)));
+    }
+
+    private function createSessionForAuthUser() : void {
+
+        session_start();
+
+        $_SESSION['user'] = sprintf("%s %s %s", $this->surname, $this->name, $this->middleName);
+
+    }
+
+    public static function setDefaultUser() {
+        if(empty($_SESSION['user'])) {
+            $_SESSION['user'] = 'Non auth';
+        }
+    }
+
+    public static function getUserName() : array {
+
+        session_start();
+        return array($_SESSION['user']);
     }
 
     private function checkingTheFillingBox() : bool {
@@ -73,6 +93,7 @@ class Registration
         if($this->checkingTheFillingBox() and $this->checkValidEmail() and $this->checkValidPhoneNumber() and $this->checkDuplication()) {
 
             $this->addUserToDataBase();
+            $this->createSessionForAuthUser();
 
             return true;
         }

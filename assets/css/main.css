@@ -2,3 +2,8 @@
     justify-content: right;
     margin-right: 0.5rem;
 }
+
+.unset-session {
+    color: #a52834;
+    text-decoration-line: none;
+}
