@@ -17,12 +17,13 @@
         </div>
         <div class="mt-5 text-center">
 
-            <h4 class="mb-0">{{ user }}</h4>
-            <span class="text-muted d-block mb-2">Hello</span>
+            <h5 class="mb-0">{{ user }}</h5>
+            <span class="text-muted d-block mb-2">{{ id }}</span>
+            <span class="text-muted d-block mb-2">{{ phoneNumber }}</span>
             {% if user == "Non auth" %}
                 <a class="nav-link prof-auth" href="?mode=authorization">Have already an account? Login here</a>
                 {% else %}
-                    <h4 class="mb-0"><a class="unset-session" href="?mode=logout">Log out</a></h4>
+                    <h5 class="mb-0"><a class="unset-session" href="?mode=logout">Log out</a></h5>
             {% endif %}
 
         </div>

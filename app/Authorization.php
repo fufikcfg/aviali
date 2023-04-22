@@ -18,10 +18,7 @@ class Authorization
     private function checkDataUser() : bool {
         $result =  \App\DataBase::getConnectToDataBase()->query(sprintf("SELECT * FROM `user` WHERE `email` = '%s' AND `password` = '%s'", $this->email, md5($this->password)));
 
-
         if($result->fetch() > 0) {
-
-
 
             return true;
         }
@@ -31,11 +28,11 @@ class Authorization
         return false;
     }
 
-    private function getUserNameForSession() : string {
+    private function getUserDataForSession() : array {
         $result =  \App\DataBase::getConnectToDataBase()->query(sprintf("SELECT * FROM `user` WHERE `email` = '%s' AND `password` = '%s'", $this->email, md5($this->password)));
-        $userFullName = $result->fetchAll(PDO::FETCH_NUM);
 
-        return sprintf("%s %s %s", $userFullName[0][1], $userFullName[0][2], $userFullName[0][3]);
+        return $result->fetchAll(PDO::FETCH_NUM);
+
     }
 
     private function checkingTheFillingBox() : bool {
@@ -58,8 +55,15 @@ class Authorization
 
     private function createSession() : void {
 
+        $userData = $this->getUserDataForSession();
+
         session_start();
-        $_SESSION['user'] = $this->getUserNameForSession();
+
+        $_SESSION['user'] = sprintf("%s %s %s", $userData[0][1], $userData[0][2], $userData[0][3]);
+
+        $_SESSION['id'] = $userData[0][0];
+
+        $_SESSION['phoneNumber'] = $userData[0][5];
     }
 
     private function successfulAuth() : bool {
@@ -84,11 +88,6 @@ class Authorization
                 "message" => $this->errorMessage
             ];
         }
-
     }
-
-
-
-
 }
 

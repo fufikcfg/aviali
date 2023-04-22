@@ -10,7 +10,7 @@ $twig = new \Twig\Environment($loader);
 
 \App\Registration::setDefaultUser();
 
-echo $twig->render('nav-bar.twig', array('user' => $_SESSION['user']));
+echo $twig->render('nav-bar.twig', array('user' => $_SESSION['user'], 'id' => $_SESSION['id']));
 
 switch($_GET['mode'])
 {
@@ -21,13 +21,18 @@ switch($_GET['mode'])
         echo $twig->render('authorization.twig');
         break;
     case "profile":
-        echo $twig->render('profile.twig', array('user' => $_SESSION['user']));
+        echo $twig->render('profile.twig', array('user' => $_SESSION['user'], 'id' => $_SESSION['id'], 'phoneNumber' => $_SESSION['phoneNumber']));
         break;
     case "logout":
-        unset($_SESSION['user']);
+        unset($_SESSION['user'], $_SESSION['id'], $_SESSION['phoneNumber']);
         header('Location: ../index.php');
         break;
-
+    case "ads":
+        echo $twig->render('ads-main-page.twig', array('user' => 'im user'));
+        break;
+    case "ads-create":
+        echo $twig->render('ads-create.twig', array('123' => '123'));
+        break;
 }
 
 //case "create-account":

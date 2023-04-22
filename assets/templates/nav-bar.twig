@@ -11,7 +11,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="?mode=profile">User: {{ user }}</a>
+    <a class="navbar-brand" href="?mode=profile">Профиль {{ user }} </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -19,20 +19,25 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 {% if user == "Non auth" %}
-                    <a class="nav-link" href="?mode=register">Registration</a>
+                    <a class="nav-link" href="?mode=register">Регистрация</a>
                 {% endif %}
             </li>
             <li class="nav-item">
                 {% if user == "Non auth" %}
-                    <a class="nav-link" href="?mode=authorization">Authorization</a>
+                    <a class="nav-link" href="?mode=authorization">Авторизация</a>
                 {% endif %}
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" href="?mode=ads">Объявления</a>
             </li>
+            {% if user != "Non auth" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="?mode=ads-create">Создать объявление</a>
+                </li>
+            {% endif %}
         </ul>
         <span class="navbar-text">
-      Navbar text with an inline element
+      AviAli
     </span>
     </div>
 </nav>
