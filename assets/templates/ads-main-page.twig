@@ -1,21 +1,28 @@
-<div style="margin: 10px 10px 10px 10px" class="container">
-    <div class="row">
-        <div class="col-sm">
-            <div class="align-items-center">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Название</h5>
-                        <p class="card-text">Описание</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Категория</li>
-                        <li class="list-group-item">Цена</li>
-                        <li class="list-group-item">Описание</li>
-                        <li class="list-group-item">Контакты для связи</li>
-                        <li class="list-group-item">Активно</li>
-                    </ul>
-                </div>
-            </div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="?mode=ads&category=auto">Авто</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="?mode=ads&category=property">Недвижимость</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="?mode=ads&category=services">Услуги</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="?mode=ads&category=forhome">Вещи для дома</a>
+    </li>
+</ul>
+{% for item in ads %}
+    <div class="card">
+        <h5 class="card-header">{{ item[2] }} | {{ item[1] }}</h5>
+        <div class="card-body">
+            <p class="card-text">{{ item[4] }}</p>
+            <p class="card-text">{{ item[3] }} ₽</p>
+            <p class="card-text">{{ item[5] }}</p>
+            <p class="card-text">{{ item[6] }}</p>
+            {% if item[7] == id %}
+                <a href="?mode=edit-ads&id={{item[0]}}" class="link-danger">Изменить</a> | <a href="?mode=delete-ads&id={{item[0]}}" class="link-danger">Удалить</a>
+            {% endif %}
         </div>
     </div>
-</div>
+{% endfor %}
