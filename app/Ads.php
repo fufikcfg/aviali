@@ -41,13 +41,6 @@ class Ads
     }
 
     public function updateEditAds($nameValue, $categoryValue, $priceValue, $descriptionValue, $statusValue, $id) : void {
-        \App\DataBase::getConnectToDataBase()->exec(sprintf("UPDATE `ads` SET `name` = '%s', `category` = '%s', `price` = '%d', `description` = '%s', `status` = '%s' WHERE `ads`.`idAds` = '%d'", $nameValue, $categoryValue, $priceValue, $descriptionValue, $statusValue, $id));
-
-    }
-
-    public function responseUpdateAds() : array {
-        return [
-            "status" => true,
-        ];
+            \App\DataBase::getConnectToDataBase()->exec(sprintf("UPDATE `ads` SET `name` = '%s', `category` = '%s', `price` = '%d', `description` = '%s', `status` = '%s' WHERE `ads`.`idAds` = '%d'", $nameValue, $categoryValue, $priceValue, $descriptionValue, $statusValue, $id));
     }
 }

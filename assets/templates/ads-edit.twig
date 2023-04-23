@@ -1,7 +1,7 @@
-<form>
+<form method="post" action="/app/edit-ads.php?id={{ adsValue[0][0] }}">
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label>Название</label><div class="id">{{ adsValue[0][0] }}</div>
+            <label>Название</label><div class="id"></div>
             <input value="{{ adsValue[0][1] }}" name="name" type="text" class="form-control" id="inputEmail4">
         </div>
         <div class="form-group col-md-6">
@@ -15,7 +15,7 @@
     </div>
     <div class="form-group col-md-4">
         <label for="inputState">Категория</label>
-        <select class="form-select" id="select-class" aria-label="Default select example">
+        <select name="category" class="form-select" id="select-class" aria-label="Default select example">
             <option value="Авто">Авто</option>
             <option value="Недвижимость">Недвижимость</option>
             <option value="Услуги">Услуги</option>
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group col-md-4">
         <label for="inputState">Статус</label>
-        <select class="form-select status-select" id="select-class" aria-label="Default select example">
+        <select name="status" class="form-select status-select" id="select-class" aria-label="Default select example">
             <option value="Активно">Активно</option>
             <option value="Неактивно">Неактивно</option>
         </select>
@@ -32,7 +32,5 @@
     <button type="submit" class="btn btn-primary btn-create-ads">Изменить</button>
 </form>
 <div class="error-message"></div>
-<script src="../assets/js/jquery-3.6.4.min.js"></script>
-<script src="../assets/js/ajax-edit-ads.js"></script>
 </body>
 </html>

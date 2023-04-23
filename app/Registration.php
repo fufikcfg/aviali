@@ -2,6 +2,7 @@
 
 namespace App;
 
+use PDO;
 class Registration
 {
 
@@ -43,9 +44,23 @@ class Registration
         \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->getUpperName(), $this->getUpperSurname(), $this->getUpperMiddleName(), $this->email, $this->phoneNumber, md5($this->password)));
     }
 
+    private function getDataByUser() : array {
+
+        $result =  \App\DataBase::getConnectToDataBase()->query(sprintf("SELECT * FROM `user` WHERE `email` = '%s' AND `password` = '%s'", $this->email, md5($this->password)));
+
+        return $result->fetchAll(PDO::FETCH_NUM);
+
+    }
+
     private function createSessionForAuthUser() : void {
 
+        $userData = $this->getDataByUser();
+
         session_start();
+
+        $_SESSION['id'] = $userData[0][0];
+
+        $_SESSION['phoneNumber'] = $userData[0][5];
 
         $_SESSION['user'] = sprintf("%s %s %s", $this->surname, $this->name, $this->middleName);
 
