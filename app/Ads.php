@@ -12,7 +12,7 @@ class Ads
     }
 
     public function getAllAds() : array {
-        $result =  \App\DataBase::getConnectToDataBase()->query("SELECT * FROM `ads`");
+        $result =  \App\DataBase::getConnectToDataBase()->query("SELECT * FROM `ads` ORDER BY `ads`.`idAds` DESC");
         return $result->fetchAll(PDO::FETCH_NUM);
     }
 

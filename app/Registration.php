@@ -25,23 +25,16 @@ class Registration
         $this->password = $password;
     }
 
-    private function getUpperName()
-    {
-        return str_replace($this->name[0], strtoupper($this->name[0]), $this->name);
-    }
+    public function mb_ucfirst($str, $encoding='UTF-8') : string {
 
-    private function getUpperSurname()
-    {
-        return str_replace($this->surname[0], strtoupper($this->surname[0]), $this->surname);
-    }
-
-    private function getUpperMiddleName()
-    {
-        return str_replace($this->middleName[0], strtoupper($this->middleName[0]), $this->middleName);
+        $str = mb_ereg_replace('^[\ ]+', '', $str);
+        $str = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding).
+            mb_substr($str, 1, mb_strlen($str), $encoding);
+        return $str;
     }
 
     private function addUserToDataBase() : void {
-        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->getUpperName(), $this->getUpperSurname(), $this->getUpperMiddleName(), $this->email, $this->phoneNumber, md5($this->password)));
+        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->mb_ucfirst($this->name), $this->mb_ucfirst($this->surname), $this->mb_ucfirst($this->middleName), $this->email, $this->phoneNumber, md5($this->password)));
     }
 
     private function getDataByUser() : array {
@@ -62,7 +55,7 @@ class Registration
 
         $_SESSION['phoneNumber'] = $userData[0][5];
 
-        $_SESSION['user'] = sprintf("%s %s %s", $this->surname, $this->name, $this->middleName);
+        $_SESSION['user'] = sprintf("%s %s %s", $this->mb_ucfirst($this->surname), $this->mb_ucfirst($this->name), $this->mb_ucfirst($this->middleName));
 
     }
 
