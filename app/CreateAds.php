@@ -44,8 +44,6 @@ class CreateAds
         \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `ads` (`idAds` , `name`, `category`, `price`, `description`, `contact`, `status`, `idUser`) VALUES (NULL ,'%s', '%s', '%d', '%s', '%s', '%s', '%d')", $this->nameAds, $this->categoryAds, $this->replaceSpacesForPrice($this->priceAds), $this->descriptionAds, $this->phoneNumberAds, $this->getDefaultStatusAds(), $this->creatorId));
     }
 
-
-
     private function successfulCreateAds() : bool {
         if($this->checkingTheFillingBox()) {
 
