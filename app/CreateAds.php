@@ -32,12 +32,16 @@ class CreateAds
         return true;
     }
 
+    private function replaceSpacesForPrice($price) : string {
+        return preg_replace("/\s+/", "", $price);
+    }
+
     private function getDefaultStatusAds() : string {
         return "Активно";
     }
 
     private function addAdsToDataBase() : void {
-        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `ads` (`idAds` , `name`, `category`, `price`, `description`, `contact`, `status`, `idUser`) VALUES (NULL ,'%s', '%s', '%d', '%s', '%s', '%s', '%d')", $this->nameAds, $this->categoryAds, $this->priceAds, $this->descriptionAds, $this->phoneNumberAds, $this->getDefaultStatusAds(), $this->creatorId));
+        \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `ads` (`idAds` , `name`, `category`, `price`, `description`, `contact`, `status`, `idUser`) VALUES (NULL ,'%s', '%s', '%d', '%s', '%s', '%s', '%d')", $this->nameAds, $this->categoryAds, $this->replaceSpacesForPrice($this->priceAds), $this->descriptionAds, $this->phoneNumberAds, $this->getDefaultStatusAds(), $this->creatorId));
     }
 
 
