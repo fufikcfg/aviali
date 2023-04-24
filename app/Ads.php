@@ -7,7 +7,7 @@ use PDO;
 class Ads
 {
     private function queryByCategory($categories) : array {
-        $result =  \App\DataBase::getConnectToDataBase()->query(sprintf("SELECT * FROM `ads` WHERE `category` = '%s'", $categories));
+        $result =  \App\DataBase::getConnectToDataBase()->query(sprintf("SELECT * FROM `ads` WHERE `category` = '%s' ORDER BY `ads`.`idAds` DESC;", $categories));
         return $result->fetchAll(PDO::FETCH_NUM);
     }
 
