@@ -40,7 +40,7 @@ class Ads
         return $result->fetchAll(PDO::FETCH_NUM);
     }
 
-    private function replaceSpacesForPrice($price) : string {
+    protected function replaceSpacesForPrice($price) : string {
         return preg_replace("/\s+/", "", $price);
     }
 

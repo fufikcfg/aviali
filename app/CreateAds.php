@@ -2,7 +2,7 @@
 
 namespace App;
 
-class CreateAds
+class CreateAds extends Ads
 {
     private $nameAds;
     private $categoryAds;
@@ -30,10 +30,6 @@ class CreateAds
             return false;
         }
         return true;
-    }
-
-    private function replaceSpacesForPrice($price) : string {
-        return preg_replace("/\s+/", "", $price);
     }
 
     private function getDefaultStatusAds() : string {
