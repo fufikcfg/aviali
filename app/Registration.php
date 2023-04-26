@@ -3,60 +3,15 @@
 namespace App;
 
 use PDO;
-class Registration
+class Registration extends Account
 {
-
-    private $name;
-    private $surname;
-    private $middleName;
-    private $email;
-    private $phoneNumber;
-    private $password;
-
-    private $errorMessage;
-
     public function __construct($name, $surname, $middleName, $email, $phoneNumber, $password)
     {
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->middleName = $middleName;
-        $this->email = $email;
-        $this->phoneNumber = $phoneNumber;
-        $this->password = $password;
-    }
-
-    public function mb_ucfirst($str, $encoding='UTF-8') : string {
-
-        $str = mb_ereg_replace('^[\ ]+', '', $str);
-        $str = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding).
-            mb_substr($str, 1, mb_strlen($str), $encoding);
-        return $str;
+        parent::__construct($name, $surname, $middleName, $email, $phoneNumber, $password);
     }
 
     private function addUserToDataBase() : void {
         \App\DataBase::getConnectToDataBase()->exec(sprintf("INSERT INTO `user` (`id`, `name`, `surname`, `middleName`, `email`, `phoneNumber`, `password`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');", $this->mb_ucfirst($this->name), $this->mb_ucfirst($this->surname), $this->mb_ucfirst($this->middleName), $this->email, $this->phoneNumber, md5($this->password)));
-    }
-
-    private function getDataByUser() : array {
-
-        $result =  \App\DataBase::getConnectToDataBase()->query(sprintf("SELECT * FROM `user` WHERE `email` = '%s' AND `password` = '%s'", $this->email, md5($this->password)));
-
-        return $result->fetchAll(PDO::FETCH_NUM);
-
-    }
-
-    private function createSessionForAuthUser() : void {
-
-        $userData = $this->getDataByUser();
-
-        session_start();
-
-        $_SESSION['id'] = $userData[0][0];
-
-        $_SESSION['phoneNumber'] = $userData[0][5];
-
-        $_SESSION['user'] = sprintf("%s %s %s", $this->mb_ucfirst($this->surname), $this->mb_ucfirst($this->name), $this->mb_ucfirst($this->middleName));
-
     }
 
     public static function setDefaultUser() {
@@ -73,14 +28,6 @@ class Registration
             return false;
         }
         return true;
-    }
-
-    private function checkValidEmail() : bool {
-        if (filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            return true;
-        }
-        $this->errorMessage = 'Плохой email адрес';
-        return false;
     }
 
     private function checkValidPhoneNumber() : bool {
@@ -109,7 +56,7 @@ class Registration
         if($this->checkingTheFillingBox() and $this->checkValidEmail() and $this->checkValidPhoneNumber() and $this->checkDuplication()) {
 
             $this->addUserToDataBase();
-            $this->createSessionForAuthUser();
+            $this->createSession();
 
             return true;
         }
