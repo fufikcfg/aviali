@@ -30,7 +30,7 @@ switch($_GET['mode'])
         header('Location: ../index.php');
         break;
     case "ads":
-        echo $twig->render('ads-main-page.twig', array('ads' => $ads->getArrayAds($_GET['category']), 'id' => $_SESSION['id']));
+        echo $twig->render('ads-main-page.twig', array('ads' => $ads->getAdsByCategory($_GET['category']), 'id' => $_SESSION['id']));
         break;
     case "ads-create":
         echo $twig->render('ads-create.twig');

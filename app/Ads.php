@@ -16,7 +16,7 @@ class Ads
         return $result->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function getArrayAds($category) : array {
+    public function getAdsByCategory($category) : array {
         switch ($category) {
             case 'auto':
                 return $this->queryByCategory('Авто');
